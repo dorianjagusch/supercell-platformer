@@ -39,6 +39,8 @@ public:
     
     void onKeyPressed(sf::Keyboard::Key key);
     void onKeyReleased(sf::Keyboard::Key key);
+    void onMouseClick(sf::Mouse::Button key);
+    void onMouseRelease(sf::Mouse::Button key);
 
     Door*                   getDoor();
     std::vector<Rectangle*> getRectangles() const;

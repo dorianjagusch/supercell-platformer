@@ -13,7 +13,7 @@ int main()
     std::unique_ptr<Game> pGame = std::make_unique<Game>();
     if (!pGame->initialise(window.getView().getSize()))
     {
-        std::cerr << "Game Failed to initialise" << std::endl;
+        std::cerr << "Game failed to initialise" << std::endl;
         return 1;
     }
     
@@ -25,22 +25,36 @@ int main()
         sf::Event event;
         while (window.pollEvent(event))
         {
-            switch(event.type)
-            {
-                case sf::Event::Closed:
-                    // "close requested" event: we close the window
-                    window.close();
-                    break;
-                case sf::Event::KeyPressed:
-                    pGame->onKeyPressed(event.key.code);
-                    break;
-                case sf::Event::KeyReleased:
-                    pGame->onKeyReleased(event.key.code);
-                    break;
-                default:
-                    break;
+            if (pGame->getState() == Game::State::ACTIVE){
+                switch(event.type)
+                {
+                    case sf::Event::Closed:
+                        // "close requested" event: we close the window
+                        window.close();
+                        break;
+                    case sf::Event::KeyPressed:
+                        pGame->onKeyPressed(event.key.code);
+                        break;
+                    case sf::Event::KeyReleased:
+                        pGame->onKeyReleased(event.key.code);
+                        break;
+                    default:
+                        break;
+                }
+            } else if (pGame->getState() == Game::State::EDIT){
+                switch(event.type)
+                {
+                    case sf::Event::MouseButtonPressed:
+                        pGame->onMouseClick(event.mouseButton.button);
+                        break;
+                    case sf::Event::KeyReleased:
+                        pGame->onMouseRelease(event.mouseButton.button);
+                        break;
+                    default:
+                        break;
+                }
             }
-        }
+    }
         
         sf::Time elapsedTime = clock.getElapsedTime();
         clock.restart();

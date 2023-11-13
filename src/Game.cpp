@@ -191,6 +191,16 @@ void Game::onKeyReleased(sf::Keyboard::Key key)
     m_pGameInput->onKeyReleased(key);
 }
 
+
+void Game::onMouseClick(sf::Mouse::Button key){
+    m_pGameInput->onMouseDown(key);
+}
+
+void Game::onMouseRelease(sf::Mouse::Button key){
+    m_pGameInput->onMouseRelease(key);
+}
+
+
 std::vector<Coin*> Game::getCoins()
 {
     std::vector<Coin*> pCoins;

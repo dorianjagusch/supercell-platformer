@@ -57,3 +57,28 @@ void GameInput::onKeyReleased(sf::Keyboard::Key key)
         m_inputData.m_movingRight = false;
     }
 }
+
+void GameInput::onMouseDown(sf::Mouse::Button key)
+{
+    if (key == sf::Mouse::Left)
+    {
+        m_inputData.m_movingLeft = true;
+    }
+    else if (key == sf::Mouse::Right)
+    {
+        m_inputData.m_movingRight = true;
+    }
+}
+
+
+void GameInput::onMouseRelease(sf::Mouse::Button key)
+{
+    if (key == sf::Mouse::Left)
+    {
+        m_inputData.m_movingLeft = false;
+    }
+    else if (key == sf::Mouse::Right)
+    {
+        m_inputData.m_movingRight = false;
+    }
+}
