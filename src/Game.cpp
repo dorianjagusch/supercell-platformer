@@ -49,6 +49,7 @@ void Game::resetLevel(const int* tileMap)
     m_pRectangles.clear();
 
     m_pPlayer->setIsDead(false);
+    m_pPlayer->resetCoins();
     m_pDoor->setTriggered(false);
 
     const sf::Vector2f tileSize(TileSizeX, TileSizeY);
