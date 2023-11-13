@@ -67,6 +67,7 @@ void Player::updatePhysics(float deltaTime)
         //Move player back if collided with level geometry
         if (pRectangle->collidesWith(this))
         {
+            m_jumpTimer = 0.0f;
             sf::Transformable::move(sf::Vector2f(0.0f, -ySpeed * deltaTime));
             m_isGrounded = true;
         }
