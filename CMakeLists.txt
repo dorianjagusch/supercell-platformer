@@ -10,6 +10,13 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(SFML)
 
+FetchContent_Declare(
+ JSON
+ GIT_REPOSITORY  https://github.com/nlohmann/json.git
+ GIT_TAG 2.6.0
+)
+FetchContent_MakeAvailable(JSON)
+
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED true)
 
@@ -24,11 +31,15 @@ file(GLOB_RECURSE SOURCES
  src/*.cpp
  src/*.c
  src/*.cxx
- src/*.h
 )
 
 add_executable(${TARGET_NAME} MACOSX_BUNDLE ${SOURCES})
+
 target_link_libraries(${TARGET_NAME} sfml-audio sfml-graphics sfml-window sfml-system)
+target_link_libraries(${TARGET_NAME} PRIVATE nlohmann_json::nlohmann_json)
+include_directories(${TARGET_NAME} PRIVATE include)
+include_directories(${TARGET_NAME} PRIVATE include/resources)
+add_subdirectory(build/deps_/json)
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Platformer)
 if(APPLE)
     file(GLOB RESOURCE_FILES "assets")
@@ -48,5 +59,6 @@ else()
             "${PROJECT_SOURCE_DIR}/build/_deps/sfml-build/lib/Debug/sfml-window-d-2.dll"
             "${PROJECT_SOURCE_DIR}/build/_deps/sfml-build/lib/Debug/sfml-audio-d-2.dll"
             "${PROJECT_SOURCE_DIR}/build/_deps/sfml-build/lib/Debug/sfml-system-d-2.dll"
+            "${PROJECT_SOURCE_DIR}/build/_deps/json"
             $<TARGET_FILE_DIR:Platformer>)
 endif()
