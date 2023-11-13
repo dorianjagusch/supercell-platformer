@@ -6,7 +6,7 @@
 #include "Game.h"
 #include "Door.h"
 
-Player::Player(Game* pGame) : Rectangle(sf::Vector2f(PlayerWidth, PlayerHeight)), m_pGame(pGame)
+Player::Player() : Rectangle(sf::Vector2f(PlayerWidth, PlayerHeight))
 {
     setPosition(sf::Vector2f(ScreenWidth * 0.5f, ScreenHeight * 0.5f)); //TODO: spawn position constant?
     setOrigin(sf::Vector2f(0.0f, 0.0f));
@@ -23,11 +23,11 @@ void Player::move(InputData inputData, float deltaTime)
     
     sf::Transformable::move(sf::Vector2f(xSpeed, 0.0f));
 
-    auto pRectangles = m_pGame->getRectangles();
-    for (auto& pRectangle : pRectangles)
+    auto& Rectangles = m_pLevel->getRectangles();
+    for (auto& Rectangle : Rectangles)
     {
         //Move player back if collided with level geometry
-        if (pRectangle->collidesWith(this))
+        if (Rectangle->collidesWith(this))
         {
             sf::Transformable::move(sf::Vector2f(-xSpeed, 0.0f));
         }
@@ -61,11 +61,11 @@ void Player::updatePhysics(float deltaTime)
     sf::Transformable::move(0.0f, ySpeed * deltaTime);
     
     m_isGrounded = false;
-    auto pRectangles = m_pGame->getRectangles();
-    for (auto& pRectangle : pRectangles)
+    auto& Rectangles = m_pLevel->getRectangles();
+    for (auto& Rectangle : Rectangles)
     {
         //Move player back if collided with level geometry
-        if (pRectangle->collidesWith(this))
+        if (Rectangle->collidesWith(this))
         {
             m_jumpTimer = 0.0f;
             sf::Transformable::move(sf::Vector2f(0.0f, -ySpeed * deltaTime));
@@ -78,7 +78,7 @@ void Player::updatePhysics(float deltaTime)
 
 void Player::update(float deltaTime)
 {
-    std::vector<Coin*> Coins = m_pGame->getCoins();
+    std::vector<std::unique_ptr<Coin>>& Coins = m_pLevel->getCoins();
     int i = 0;
 
     for (auto& temp : Coins)
@@ -90,9 +90,9 @@ void Player::update(float deltaTime)
         }
     }
 
-    if (m_pGame->getDoor()->collidesWith(this))
+    if (m_pLevel->getDoor()->collidesWith(this))
     {
-        m_pGame->getDoor()->setTriggered(true);
+        m_pLevel->getDoor()->setTriggered(true);
     }
 }
 

@@ -1,16 +1,18 @@
 #pragma once
 
 #include "Rectangle.h"
-
+#include "Level.h"
+#include "Door.h"
 
 struct InputData;
 
-class Game;
+class Level;
+class Door;
 
 class Player : public Rectangle
 {
 public:
-    Player(Game* pGame);
+    Player();
     virtual ~Player() {}
     
     bool initialise(){};
@@ -25,9 +27,9 @@ public:
     void resetCoins(){m_coins = 0;}
 
 private:
-    bool    m_isGrounded = false;
-    bool    m_isDead = false;
-    float   m_jumpTimer = 0.0f;
-    Game*   m_pGame;
-    int     m_coins = 0;
+    bool                    m_isGrounded = false;
+    bool                    m_isDead = false;
+    float                   m_jumpTimer = 0.0f;
+    std::unique_ptr<Level>  m_pLevel;
+    int                     m_coins = 0;
 };

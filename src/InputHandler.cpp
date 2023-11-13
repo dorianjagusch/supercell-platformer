@@ -1,8 +1,8 @@
 #include "InputHandler.h"
 #include "Player.h"
 
-GameInput::GameInput(Game* pGame, Player* pPlayer) :
-    m_pGame(pGame), m_pPlayer(pPlayer)
+GameInput::GameInput(Game* pGame, std::unique_ptr<Player>& player) :
+    m_pGame(pGame), m_pPlayer(player)
 {
 }
 
@@ -62,11 +62,11 @@ void GameInput::onMouseDown(sf::Mouse::Button key)
 {
     if (key == sf::Mouse::Left)
     {
-        m_inputData.m_movingLeft = true;
+        m_inputData.m_MouseLeft = true;
     }
     else if (key == sf::Mouse::Right)
     {
-        m_inputData.m_movingRight = true;
+        m_inputData.m_MouseRight = true;
     }
 }
 
@@ -75,10 +75,10 @@ void GameInput::onMouseRelease(sf::Mouse::Button key)
 {
     if (key == sf::Mouse::Left)
     {
-        m_inputData.m_movingLeft = false;
+        m_inputData.m_MouseLeft = false;
     }
     else if (key == sf::Mouse::Right)
     {
-        m_inputData.m_movingRight = false;
+        m_inputData.m_MouseRight = false;
     }
 }

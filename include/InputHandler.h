@@ -1,7 +1,10 @@
 #pragma once
 
 #include "Controller.h"
+#include <memory>
 #include <SFML/Window/Keyboard.hpp>
+#include <SFML/Window/Mouse.hpp>
+#include <SFML/Window/Event.hpp>
 
 class Player;
 class Game;
@@ -21,9 +24,9 @@ struct InputData
 class GameInput
 {
 public:
-    GameInput(Game* pGame, Player* pPlayer);
+    GameInput(Game* pGame, std::unique_ptr<Player>& player);
     ~GameInput();
-    
+
     void update(float deltaTime);
     void onKeyPressed(sf::Keyboard::Key key);
     void onKeyReleased(sf::Keyboard::Key key);
@@ -33,6 +36,6 @@ public:
 
 private:
     InputData m_inputData;
+    std::unique_ptr<Player>& m_pPlayer; //dangerous
     Game* m_pGame;
-    Player* m_pPlayer;
 };

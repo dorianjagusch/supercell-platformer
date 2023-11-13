@@ -3,6 +3,7 @@
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/Transformable.hpp>
 #include <SFML/Graphics.hpp>
+#include <memory>
 
 class Rectangle : public sf::Drawable, public sf::Transformable
 {

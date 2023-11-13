@@ -47,7 +47,7 @@ int main()
                     case sf::Event::MouseButtonPressed:
                         pGame->onMouseClick(event.mouseButton.button);
                         break;
-                    case sf::Event::KeyReleased:
+                    case sf::Event::MouseButtonReleased:
                         pGame->onMouseRelease(event.mouseButton.button);
                         break;
                     default:
